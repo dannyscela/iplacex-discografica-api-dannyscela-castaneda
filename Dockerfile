@@ -6,7 +6,7 @@ COPY . .
 RUN gradle clean bootJar --no-daemon
 
 # ejecuto con openjdk
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jdk-jammy
 WORKDIR /app
 # y luego se copia el .jar generado en la etapa anterior
 COPY --from=build /app/build/libs/discografia-1.jar app.jar
