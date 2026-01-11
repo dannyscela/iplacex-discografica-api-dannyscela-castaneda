@@ -1,17 +1,22 @@
-# aqui uso la imagen de Gradle para generar el archivo .jar
-FROM gradle:8.10.2-jdk17 AS build
+# ETAPA 1: Compilación
+# Uso JDK 17, que es el que tengo instalado en mi computadora
+FROM gradle:8.10-jdk17 AS build
 WORKDIR /app
-COPY . .
-# Generamos el archivo ejecutable
-RUN gradle clean bootJar --no-daemon
 
-# ejecuto con openjdk
+# Copiamos solo los archivos necesarios primero
+COPY --chown=gradle:gradle . .
+
+# Ejecutamos la compilación
+RUN gradle bootJar --no-daemon
+
+# ETAPA 2: Ejecución (Run)
 FROM eclipse-temurin:17-jdk-jammy
 WORKDIR /app
-# y luego se copia el .jar generado en la etapa anterior
-COPY --from=build /app/build/libs/discografia-1.jar app.jar
 
-# este es el puerto de salida
+# Copiamos el JAR generado en la etapa anterior
+COPY --from=build /app/build/libs/*.jar app.jar
+
 EXPOSE 8080
-# Comando para iniciar la API
+
+# Comando para iniciar la aplicación
 ENTRYPOINT ["java", "-jar", "app.jar"]
