@@ -1,5 +1,5 @@
 # ETAPA 1: Construcción
-FROM eclipse-temurin:17-jdk-jammy AS build
+FROM gradle:8.10-jdk17 AS build
 WORKDIR /app
 
 COPY gradlew .
