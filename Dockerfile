@@ -1,9 +1,15 @@
-# ETAPA 1: Compilación
-FROM gradle:8.10-jdk17 AS build
+# ETAPA 1: Construcción
+FROM eclipse-temurin:17-jdk-jammy AS build
 WORKDIR /app
-COPY . .
 
-RUN gradle bootJar -x test --no-daemon
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle .
+COPY settings.gradle .
+COPY src src
+
+RUN chmod +x gradlew
+RUN ./gradlew bootJar -x test --no-daemon
 
 # ETAPA 2: Ejecución
 FROM eclipse-temurin:17-jdk-jammy
