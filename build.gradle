@@ -1,11 +1,11 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.2.0' // O la versión que estés usando
+    id 'org.springframework.boot' version '3.2.0'
     id 'io.spring.dependency-management' version '1.1.4'
 }
 
 group = 'com.iplacex'
-version = '1' // ESTO ES LO QUE PIDE EL PROFE
+version = '1'
 
 java {
     sourceCompatibility = '17'
